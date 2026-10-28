@@ -1,0 +1,57 @@
+---
+layout: runbook
+title: '#4471 split: the problems inside it'
+owner: Sekou B. Diarra
+status: proposed
+reviewed: 2026-10-28
+signature: Sekou B. Diarra
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const repo = 'https://github.com/sbdiarra/megadev-challenges/issues';
+  const issues = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day': `${repo}/3` };
+</script>
+
+[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. It is more than one problem.
+The desk merged on subject line ([decision 0001](/kb/decisions/0001-dedupe-by-subject)), and
+every report says the same thing: the date is wrong. The bodies, the tenants and their booking
+forms say why, and the why is not the same.
+
+<ProblemTable ticket={4471} {issues} />
+
+<Callout kind="warn">
+The queued parser fix closes only the first row. The other two stay open after it ships.
+</Callout>
+
+## The problems
+
+**`parser`: day and month swap.** The shared parser reads every date month first, and every
+tenant in #4471 writes the day first. "Our 7 April reminder went out on 4 July." It reaches
+every tenant through the app, email and the `booking-v2` form.
+
+**`hint`: the form tells people to type it wrong.** `booking-v3` prints `MM/DD/YYYY` under
+its date field and then reads the date day first. People do what the hint says, and the date
+swaps. Only the tenants on `booking-v3`, only through the form. The symptom is the same
+as `parser`, so the subject rule merged it; the fix is not.
+
+**`one-day`: a day off, not a swap.** "Invite says Tuesday 12 May. Calendar says Monday 11
+May." "Client in Lisbon got Tuesday. Client in Toronto got Monday." These are time zone moves.
+The desk already read them this way (`desk-notes.json`) but still counted them under `parser`.
+
+## How to read the counts
+
+- One id, one report: the export repeats some reports, so the table counts unique ids.
+- The tenant decides the problem, not intake's tag. Intake's tag is a guess from the browser,
+  and it disagrees with the tenant on dozens of reports (see the table below).
+- Every number on this page is computed at render time from the export. None is typed.
+
+## The desk's view, for comparison
+
+<CauseTable ticket={4471} />
+
+<RenderStamp {signature} />
