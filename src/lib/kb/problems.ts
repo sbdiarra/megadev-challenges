@@ -1,10 +1,14 @@
-// The problems inside a merged ticket. causes.ts says which cause a report belongs to; this file
-// also takes out the reports the desk read as something else (desk-notes.json), so each problem
-// is counted once, where it belongs.
-import { causeOf, uniqueById, type Report, type Tenant } from '#lib/kb/causes';
+// The problems inside a merged ticket, counted once each.
+//
+// causes.ts splits day-first tenants into `parser` and `hint`. They are one problem: booking-v3's
+// hint (MM/DD/YYYY) is the order the shared parser already reads, so someone who follows the hint
+// gets the right date. A swapped date through that form means the person typed day first, as their
+// country does, and the parser read it month first: the parser bug, through one more door.
+// The reports the desk read as one-day moves (desk-notes.json) are not swaps at all.
+import { dayFirst, uniqueById, type Report, type Tenant } from '#lib/kb/causes';
 
-export type Problem = 'parser' | 'hint' | 'one-day';
-export const PROBLEMS: readonly Problem[] = ['parser', 'hint', 'one-day'];
+export type Problem = 'parser' | 'one-day';
+export const PROBLEMS: readonly Problem[] = ['parser', 'one-day'];
 
 export type ProblemGroup = {
   problem: Problem | 'unplaced';
@@ -16,7 +20,7 @@ export type ProblemGroup = {
 
 export function problemOf(r: Report, t: Tenant | undefined, oneDayMove: readonly string[]): Problem | 'unplaced' {
   if (oneDayMove.includes(r.id)) return 'one-day';
-  return causeOf(r, t) ?? 'unplaced';
+  return t && dayFirst(t.locale) ? 'parser' : 'unplaced';
 }
 
 export function groupByProblem(

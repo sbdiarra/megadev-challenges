@@ -9,14 +9,14 @@
 		<link href="../../../_app/immutable/chunks/B2Ul7l_u.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/BCPXOG7W.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/Dh1V97Jm.js" rel="modulepreload">
-		<link href="../../../_app/immutable/entry/app.BPILmIMD.js" rel="modulepreload">
+		<link href="../../../_app/immutable/entry/app.BK-AkZrN.js" rel="modulepreload">
 		<link href="../../../_app/immutable/nodes/0.C9KfiiPz.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/DK3Fl9T5.js" rel="modulepreload">
-		<link href="../../../_app/immutable/nodes/5.DOoruwnn.js" rel="modulepreload">
-		<link href="../../../_app/immutable/chunks/ssfwLObW.js" rel="modulepreload">
+		<link href="../../../_app/immutable/nodes/5.J6cyriN0.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/meecC0RK.js" rel="modulepreload">
 		<link href="../../../_app/immutable/chunks/BTPwLomz.js" rel="modulepreload">
-		<link href="../../../_app/immutable/chunks/CVzl_KNK.js" rel="modulepreload">
-		<link href="../../../_app/immutable/chunks/BIy4WKJS.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/DugG9tN5.js" rel="modulepreload">
+		<link href="../../../_app/immutable/chunks/LUbVV1JP.js" rel="modulepreload">
 		<!--e2jw2j--><!----><title>#4471 split: the problems inside it · support kb</title>
 		<link href="../../../_app/immutable/assets/runbook.COyw0cbZ.css" rel="stylesheet">
 		<link href="../../../_app/immutable/assets/Callout.AbLv9dM_.css" rel="stylesheet">
@@ -27,28 +27,27 @@
     <div style="display: contents"><!--[--><!--[--><!--[0--><!--[--><!--[--><!--[-1--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471 split: the problems inside it</h1> <p class="meta svelte-e2jw2j"><span>owner <b>Sekou B. Diarra</b></span> <span class="status proposed svelte-e2jw2j">proposed</span> <span class="svelte-e2jw2j">reviewed 2026-10-28 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> is marked known: one issue, one fix queued. It is more than one problem.
 The desk merged on subject line (<a href="/kb/decisions/0001-dedupe-by-subject">decision 0001</a>), and
 every report says the same thing: the date is wrong. The bodies, the tenants and their booking
-forms say why, and the why is not the same.</p> <p class="sum svelte-1op6c6"><strong>412</strong> unique reports in #4471 · <strong>3</strong> problems · each report counted once</p> <table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>ticket</th></tr></thead><tbody><!--[--><tr><td><code>parser</code></td><td>374</td><td>11</td><td>2026-04-01 → 2026-10-04</td><td><!--[0--><a href="https://github.com/sbdiarra/megadev-challenges/issues/1">issue #1</a><!--]--></td></tr><tr><td><code>hint</code></td><td>33</td><td>3</td><td>2026-04-17 → 2026-09-22</td><td><!--[0--><a href="https://github.com/sbdiarra/megadev-challenges/issues/2">issue #2</a><!--]--></td></tr><tr><td><code>one-day</code></td><td>5</td><td>5</td><td>2026-04-02 → 2026-10-04</td><td><!--[0--><a href="https://github.com/sbdiarra/megadev-challenges/issues/3">issue #3</a><!--]--></td></tr><!--]--></tbody></table><!----> <aside class="warn svelte-17bri61"><!---->The queued parser fix closes only the first row. The other two stay open after it ships.<!----></aside><!----> <h2>The problems</h2> <p><strong><code>parser</code>: day and month swap.</strong> The shared parser reads every date month first, and every
+forms say why, and the why is not the same.</p> <p class="sum svelte-1op6c6"><strong>412</strong> unique reports in #4471 · <strong>2</strong> problems · each report counted once</p> <table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>ticket</th></tr></thead><tbody><!--[--><tr><td><code>parser</code></td><td>407</td><td>11</td><td>2026-04-01 → 2026-10-04</td><td><!--[0--><a href="https://github.com/sbdiarra/megadev-challenges/issues/1">issue #1</a><!--]--></td></tr><tr><td><code>one-day</code></td><td>5</td><td>5</td><td>2026-04-02 → 2026-10-04</td><td><!--[0--><a href="https://github.com/sbdiarra/megadev-challenges/issues/3">issue #3</a><!--]--></td></tr><!--]--></tbody></table><!----> <aside class="warn svelte-17bri61"><!---->The queued parser fix closes the first row only. The one-day moves stay after it ships.<!----></aside><!----> <h2>The problems</h2> <p><strong><code>parser</code>: day and month swap.</strong> The shared parser reads every date month first, and every
 tenant in #4471 writes the day first. “Our 7 April reminder went out on 4 July.” It reaches
-every tenant through the app, email and the <code>booking-v2</code> form.</p> <p><strong><code>hint</code>: the form tells people to type it wrong.</strong> <code>booking-v3</code> prints <code>MM/DD/YYYY</code> under
-its date field and then reads the date day first. People do what the hint says, and the date
-swaps. Only the tenants on <code>booking-v3</code>, only through the form. The symptom is the same
-as <code>parser</code>, so the subject rule merged it; the fix is not.</p> <p><strong><code>one-day</code>: a day off, not a swap.</strong> “Invite says Tuesday 12 May. Calendar says Monday 11
+every tenant through the app, email and both booking forms.</p> <p>The kb files the <code>booking-v3</code> form reports apart, as <code>hint</code>. They are the same bug. <code>booking-v3</code> prints <code>MM/DD/YYYY</code>, the order the parser already reads, so a person who follows
+the hint gets the right date. A swapped date through that form means the person typed the day
+first, as their country does, and the parser read it month first. One fix closes both.</p> <p><strong><code>one-day</code>: a day off, not a swap.</strong> “Invite says Tuesday 12 May. Calendar says Monday 11
 May.” “Client in Lisbon got Tuesday. Client in Toronto got Monday.” These are time zone moves.
 The desk already read them this way (<code>desk-notes.json</code>) but still counted them under <code>parser</code>.</p> <h2>How to read the counts</h2> <ul><li>One id, one report: the export repeats some reports, so the table counts unique ids.</li> <li>The tenant decides the problem, not intake’s tag. Intake’s tag is a guess from the browser,
-and it disagrees with the tenant on dozens of reports (see the table below).</li> <li>Every number on this page is computed at render time from the export. None is typed.</li></ul> <h2>The desk’s view, for comparison</h2> <p class="sum svelte-12oyimm"><strong>412</strong> reports merged into #4471 · <strong>2</strong> causes</p> <table><thead><tr><th>cause</th><th>reports</th><th>tagged as</th><th>tenants</th><th>seen</th><th></th></tr></thead><tbody><!--[--><tr class="svelte-12oyimm"><td class="svelte-12oyimm"><code>parser</code></td><td class="svelte-12oyimm">379</td><td class="tags svelte-12oyimm">parser ×356 · hint ×23</td><td class="svelte-12oyimm">11</td><td class="svelte-12oyimm">2026-04-01 → 2026-10-04</td><td class="svelte-12oyimm">#4471</td></tr><tr class="svelte-12oyimm wrong"><td class="svelte-12oyimm"><code>hint</code></td><td class="svelte-12oyimm">33</td><td class="tags svelte-12oyimm">hint ×18 · parser ×15</td><td class="svelte-12oyimm">3</td><td class="svelte-12oyimm">2026-04-17 → 2026-09-22</td><td class="svelte-12oyimm">not this ticket — no ticket of its own</td></tr><!--]--></tbody></table> <!--[--><!--[0--><p class="note svelte-12oyimm">5 reports read as a one-day move; filed under <code>parser</code> by tenant.</p><!--]--><!--[-1--><!--]--><!--]--><!----> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-37EV-ERW7</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!--]--><!--]--><!----><!--]--><!--]--><!--]--><!----> <!--[-1--><!--]--><!--]-->
+and its <code>hint</code> tag is not a problem of its own (see the table below).</li> <li>Every number on this page is computed at render time from the export. None is typed.</li></ul> <h2>The desk’s view, for comparison</h2> <p class="sum svelte-12oyimm"><strong>412</strong> reports merged into #4471 · <strong>2</strong> causes</p> <table><thead><tr><th>cause</th><th>reports</th><th>tagged as</th><th>tenants</th><th>seen</th><th></th></tr></thead><tbody><!--[--><tr class="svelte-12oyimm"><td class="svelte-12oyimm"><code>parser</code></td><td class="svelte-12oyimm">379</td><td class="tags svelte-12oyimm">parser ×356 · hint ×23</td><td class="svelte-12oyimm">11</td><td class="svelte-12oyimm">2026-04-01 → 2026-10-04</td><td class="svelte-12oyimm">#4471</td></tr><tr class="svelte-12oyimm wrong"><td class="svelte-12oyimm"><code>hint</code></td><td class="svelte-12oyimm">33</td><td class="tags svelte-12oyimm">hint ×18 · parser ×15</td><td class="svelte-12oyimm">3</td><td class="svelte-12oyimm">2026-04-17 → 2026-09-22</td><td class="svelte-12oyimm">not this ticket — no ticket of its own</td></tr><!--]--></tbody></table> <!--[--><!--[0--><p class="note svelte-12oyimm">5 reports read as a one-day move; filed under <code>parser</code> by tenant.</p><!--]--><!--[-1--><!--]--><!--]--><!----> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-37EV-ERW7</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!--]--><!--]--><!----><!--]--><!--]--><!--]--><!----> <!--[-1--><!--]--><!--]-->
 			
 			<script>
 				{
-					__sveltekit_8v91aq = {
+					__sveltekit_1rm016c = {
 						base: new URL("../../..", location).pathname.slice(0, -1),
-						version: "1793177197317"
+						version: "1793177459334"
 					};
 
 					const element = document.currentScript.parentElement;
 
 					import("../../../_app/immutable/entry/start.CH5w6lId.js").then(async (kit) => {
-						kit.init(__sveltekit_8v91aq);
-						const app = await import("../../../_app/immutable/entry/app.BPILmIMD.js");
+						kit.init(__sveltekit_1rm016c);
+						const app = await import("../../../_app/immutable/entry/app.BK-AkZrN.js");
 						kit.start(app, element, {
 							node_ids: [0, 5],
 							data: [null,null],
