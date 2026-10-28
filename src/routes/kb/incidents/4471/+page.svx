@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 · dates parse mm/dd in eu locales'
 owner: support desk
-status: split
+status: closed
 reviewed: 2026-10-28
 ---
 
@@ -16,11 +16,11 @@ Since April, people have told us their bookings land on the wrong day: a month f
 table below counts the reports the desk merged here by 4 October.
 
 **Merged as one issue, but it is two.** The parser reads dates month first, and our tenants
-write the day first: that is `parser`, and its fix is queued. The `booking-v3` form prints
-`MM/DD/YYYY` and reads the date day first: that is `hint`, and the parser fix does not close it.
+write the day first: that is `parser`, fixed (fix(dates): parse dd/mm for eu locales). The `booking-v3` form prints
+`MM/DD/YYYY` and reads the date day first: that is `hint`, won't fix: the form is retired.
 
 <Callout kind="warn">
-Split. Each cause now has its own ticket:
+Closed 5 October. Each cause has its own ticket:
 <a href="https://github.com/sbdiarra/megadev-challenges/issues/1">parser</a> and
 <a href="https://github.com/sbdiarra/megadev-challenges/issues/4">hint</a>.
 The counts and the reasoning are on <a href="/kb/incidents/4471/split">the split page</a>.

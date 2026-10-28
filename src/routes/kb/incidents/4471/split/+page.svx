@@ -4,7 +4,7 @@ title: '#4471 split: the problems inside it'
 owner: Sekou B. Diarra
 status: accepted
 reviewed: 2026-10-28
-signature: Sekou B. Diarra
+signature: v1.eyJzdWIiOiIxOTU4IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMxODAxNDksImV4cCI6MTc5MzI2NjU0OX0.IatGhfsltBPoB8RtnGtK3ojSt2zw37JHiWhGhNLJ-4E
 ---
 
 <script>
@@ -24,21 +24,22 @@ forms say why, and the why is not the same.
 
 <ProblemTable ticket={4471} {issues} />
 
-<Callout kind="warn">
-The queued parser fix closes the first row only. The `hint` reports stay after it ships.
+<Callout>
+Engineering closed #4471 on 5 October. `parser` is fixed: fix(dates): parse dd/mm for eu
+locales. `hint` won't be fixed: the `booking-v3` form is retired.
 </Callout>
 
 ## The problems
 
 **`parser`: day and month swap.** The shared parser reads every date month first, and every
 tenant in #4471 writes the day first. "Our 7 April reminder went out on 4 July." It reaches
-every tenant through the app, email and the `booking-v2` form. This is the fix that is queued.
+every tenant through the app, email and the `booking-v2` form. Fixed: parse dd/mm for eu locales.
 
 **`hint`: the form tells people to type it wrong.** `booking-v3` prints `MM/DD/YYYY` under
 its date field and then reads the date day first. People do what the hint says, and the date
 swaps. Only the tenants on `booking-v3`, only through the form. The symptom is the same as
 `parser`, so the subject rule merged it. The fix is not the same, and it had no ticket of its
-own: the desk's table below already marks the row "not this ticket".
+own: the desk's table below already marks the row "not this ticket". Won't fix: the form is retired.
 
 **The one-day moves.** The desk read a few `parser` reports as a one-day move
 (`desk-notes.json`). Their tenant files them under `parser`, so they are counted there, once,
