@@ -1,14 +1,9 @@
-// The problems inside a merged ticket, counted once each.
-//
-// causes.ts splits day-first tenants into `parser` and `hint`. They are one problem: booking-v3's
-// hint (MM/DD/YYYY) is the order the shared parser already reads, so someone who follows the hint
-// gets the right date. A swapped date through that form means the person typed day first, as their
-// country does, and the parser read it month first: the parser bug, through one more door.
-// The reports the desk read as one-day moves (desk-notes.json) are not swaps at all.
-import { dayFirst, uniqueById, type Report, type Tenant } from '#lib/kb/causes';
+// The problems inside a merged ticket, one row each, from the cause causes.ts gives every report.
+// The reports the desk read differently (desk-notes.json) stay where their tenant files them;
+// the page footnotes them.
+import { causeOf, uniqueById, type Cause, type Report, type Tenant } from '#lib/kb/causes';
 
-export type Problem = 'parser' | 'one-day';
-export const PROBLEMS: readonly Problem[] = ['parser', 'one-day'];
+export type Problem = Cause;
 
 export type ProblemGroup = {
   problem: Problem | 'unplaced';
@@ -18,21 +13,15 @@ export type ProblemGroup = {
   lastSeen: string;
 };
 
-export function problemOf(r: Report, t: Tenant | undefined, oneDayMove: readonly string[]): Problem | 'unplaced' {
-  if (oneDayMove.includes(r.id)) return 'one-day';
-  return t && dayFirst(t.locale) ? 'parser' : 'unplaced';
-}
-
 export function groupByProblem(
   reports: Report[],
   ticket: number,
   tenantOf: (r: Report) => Tenant | undefined,
-  oneDayMove: readonly string[],
 ): { merged: number; groups: ProblemGroup[] } {
   const merged = uniqueById(reports).filter((r) => r.mergedInto === ticket);
   const by = new Map<ProblemGroup['problem'], Report[]>();
   for (const r of merged) {
-    const p = problemOf(r, tenantOf(r), oneDayMove);
+    const p = causeOf(r, tenantOf(r)) ?? 'unplaced';
     by.set(p, [...(by.get(p) ?? []), r]);
   }
   const groups = [...by.entries()]

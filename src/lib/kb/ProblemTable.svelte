@@ -8,7 +8,7 @@
   // issues: problem → where its ticket lives, e.g. { parser: 'https://…/issues/1' }
   let { ticket, issues = {} }: { ticket: number; issues?: Partial<Record<ProblemGroup['problem'], string>> } = $props();
 
-  const split = $derived(groupByProblem(reports as Report[], ticket, tenantOf, notes.oneDayMove));
+  const split = $derived(groupByProblem(reports as Report[], ticket, tenantOf));
   const counted = $derived(split.groups.reduce((n, g) => n + g.reports.length, 0));
 </script>
 
@@ -32,6 +32,14 @@
   </tbody>
 </table>
 
+{#each split.groups as g (g.problem)}
+  {@const moved = g.reports.filter((r) => notes.oneDayMove.includes(r.id)).length}
+  {#if moved}
+    <p class="note">{moved} of the <code>{g.problem}</code> reports were read by the desk as a one-day move. Their tenant files them under <code>{g.problem}</code>, so they are counted there.</p>
+  {/if}
+{/each}
+
 <style>
+  .note { color: var(--muted); font-size: 0.85em; }
   .sum { font-size: 1.1rem; }
 </style>
