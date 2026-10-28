@@ -2,7 +2,7 @@
 layout: runbook
 title: '#4471 split: the problems inside it'
 owner: Sekou B. Diarra
-status: proposed
+status: accepted
 reviewed: 2026-10-28
 signature: Sekou B. Diarra
 ---
