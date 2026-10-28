@@ -2,8 +2,8 @@
 layout: runbook
 title: '#4471 · dates parse mm/dd in eu locales'
 owner: support desk
-status: known
-reviewed: 2026-09-30
+status: split
+reviewed: 2026-10-28
 ---
 
 <script>
@@ -12,14 +12,18 @@ reviewed: 2026-09-30
   import Callout from '#lib/kb/Callout.svelte';
 </script>
 
-Since April, people have told us their bookings land on the wrong day: a month flipped. By
-4 October the desk had **412 reports**.
+Since April, people have told us their bookings land on the wrong day: a month flipped. The
+table below counts the reports the desk merged here by 4 October.
 
-**Merged as one issue.** The parser reads dates month first, and our tenants write the day
-first. The fix is queued.
+**Merged as one issue, but it is two.** The parser reads dates month first, and our tenants
+write the day first: that is `parser`, and its fix is queued. The `booking-v3` form prints
+`MM/DD/YYYY` and reads the date day first: that is `hint`, and the parser fix does not close it.
 
-<Callout>
-Known. One issue, one fix queued.
+<Callout kind="warn">
+Split. Each cause now has its own ticket:
+[parser](https://github.com/sbdiarra/megadev-challenges/issues/1) and
+[hint](https://github.com/sbdiarra/megadev-challenges/issues/4).
+The counts and the reasoning are on [the split page](/kb/incidents/4471/split).
 </Callout>
 
 ## What was merged
