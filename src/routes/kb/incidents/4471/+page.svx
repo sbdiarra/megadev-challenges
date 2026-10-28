@@ -21,9 +21,9 @@ write the day first: that is `parser`, and its fix is queued. The `booking-v3` f
 
 <Callout kind="warn">
 Split. Each cause now has its own ticket:
-[parser](https://github.com/sbdiarra/megadev-challenges/issues/1) and
-[hint](https://github.com/sbdiarra/megadev-challenges/issues/4).
-The counts and the reasoning are on [the split page](/kb/incidents/4471/split).
+<a href="https://github.com/sbdiarra/megadev-challenges/issues/1">parser</a> and
+<a href="https://github.com/sbdiarra/megadev-challenges/issues/4">hint</a>.
+The counts and the reasoning are on <a href="/kb/incidents/4471/split">the split page</a>.
 </Callout>
 
 ## What was merged
